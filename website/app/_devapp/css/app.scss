@@ -1,19 +1,94 @@
 $primary-color:#44ab10;
 $secondary-color:#7ade4b;
 $background-color:#444;
+$background-color-light:lighten($background-color,25%);
 $background-color-alt:#fff;
 $text-color:black;
 $text-color-alt:#fff;
+$topbar-height:60px;
 
 body{
   background-color:$background-color;
 }
+
+.layout-header{
+
+
+  background-color:$primary-color;
+  display:block;
+  padding:0;
+  height:$topbar-height;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+  .menu-button{
+    display:none;
+    color: $background-color-alt;
+    font-size: 24px;
+    height:$topbar-height;
+    width:$topbar-height;
+    line-height:$topbar-height;
+    text-align: center;
+    cursor: pointer;
+    -webkit-transition: background-color 0.2s;
+    transition: background-color 0.2s;
+    :hover{
+      background-color: $secondary-color;
+    }
+    i{
+      line-height:inherit;
+    }
+  }
+  .header-menu{
+    list-style-type: none;
+    float: right;
+    margin:0;
+    padding: 0;
+    height: 100%;
+    li{
+      display: inline-block;
+      height: 100%;
+      span, a{
+        text-decoration: none;
+        color: $background-color-alt;
+        min-width: 120px;
+        display: inline-block;
+        text-align: center;
+        height: 100%;
+        line-height: $topbar-height;
+        -webkit-transition: background-color 0.2s;
+        transition: background-color 0.2s;
+
+
+      }
+      :hover,:focus{
+        background-color:$secondary-color!important;
+      }
+
+    }
+    .menu-highlight{
+      background-color:darken($primary-color,7%);
+    }
+
+  }
+
+}
+#layout-sidebar{
+
+}
 .hidden { display:none; }
 .cancel-btn{
   background-color:$background-color!important;
+  :hover{
+    background-color:$background-color-light;
+  }
 }
 .submit-btn{
   background-color:$primary-color!important;
+  outline-color:$secondary-color!important;
   :hover{
     background-color:$secondary-color;
   }
@@ -24,14 +99,15 @@ body{
 }
 .LoginForm{
   display:inline-block;
-  padding:15px;
-  border-radius: 5px;
+  padding:5px;
+  border-radius: 10px;
   position:absolute;
   top:50%;
   left:50%;
+  max-width:400px;
   margin-right:-50%;
   transform:translate(-50%,50%);
-  border:2px solid $secondary-color;
+  border:2px solid $primary-color;
   background-color: $background-color-alt;
   #LoginHeader{
     img{
@@ -62,5 +138,38 @@ body{
 
 
 }
+@media screen and (max-width: 64em) {
+  $topbar-height-mobile:40px;
+  .layout-header{
+    .menu-button{
+      display: inline-block;
+    }
 
+    #layout-sidebar {
+      display:none;
+      top: 98px;
+      left: -300px;
+      -webkit-transition: left 0.2s;
+      transition: left 0.2s;
+      z-index: 999;
+
+      .active{
+        display:inline-block;
+        left:0;
+      }
+      .layout-mask {
+        z-index: 998;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 98px;
+        left: 0;
+        opacity: .7;
+        background-color: #333333;
+        -webkit-animation: layoutMaskFade .3s;
+        animation: layoutMaskFade .3s;
+      }
+    }
+  }
+}
 
