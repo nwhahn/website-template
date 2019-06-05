@@ -1,17 +1,22 @@
 <?php
 
+require_once '../lib/database.php';
 
-class userClass
+class userClass extends database
 {
     private $unid;
-    private $username;
-    private $first_name;
-    private $diaplay_name;
-    private $display_name;
-    public function __construct($username=null, $password=null)
+    private $user_obj=array(
+        'email'=>'',
+        'first_name'=>'',
+        'last_name'=>'',
+        'account_type'=>''
+
+    );
+    public function __construct($email=null, $password=null,$options=null)
     {
-        if($username=='null'){
-            if(create_user($username,$password)){
+
+        if($email=='null'){
+            if(create_user($email,$password)){
                 return;
             }
             else{
@@ -20,6 +25,29 @@ class userClass
         }
 
 
+
+    }
+    public function encrypt_password($password){
+        $options=[
+            'cost'=>12
+        ];
+        $encrypted=password_hash($password,PASSWORD_BCRYPT,$options);
+        return $encrypted;
+    }
+    public function verify_password($password,$hash){
+
+        return password_verify($password,$hash);
+
+    }
+    public function alter_attribute($field,$value){
+
+    }
+    private function save_user(){
+        return $this->save_object($this->unid,'user',$this->data);
+    }
+    public function display_error($error){
+        $msg='';
+        return $msg;
     }
     public function is_user($email){
         $users=['nathan@nwhahn.com','nathanh@generationelectricalsupply.com'];
@@ -36,9 +64,7 @@ class userClass
     }
     protected function update_field($field,$value){
         $this->$field=$value;
-        if($field=='first_name'){
-            $display_name=$this->first_name.''.$this->last_name;
-        }
+
     }
     public function get_field($field){
 

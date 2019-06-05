@@ -30,6 +30,7 @@ body {
   background-color: #7ade4b;
 }
 .layout-header .menu-button i {
+  width: inherit;
   line-height: inherit;
 }
 .layout-header .header-menu {
@@ -60,7 +61,21 @@ body {
 .layout-header .header-menu .menu-highlight {
   background-color: #378a0d;
 }
+.layout-header .header-menu .account-button {
+  float: left;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.layout-header .header-menu .account-button .p-button {
+  width: 60px;
+  height: 60px;
+  background-color: #378a0d;
+}
 
+#layout-content {
+  padding-top: 60px !important;
+}
 .hidden {
   display: none;
 }
@@ -85,15 +100,9 @@ body {
 }
 
 .LoginForm {
-  display: inline-block;
   padding: 5px;
   border-radius: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  max-width: 400px;
-  margin-right: -50%;
-  transform: translate(-50%, 50%);
+  width: 400px;
   border: 2px solid #44ab10;
   background-color: #fff;
 }
@@ -112,32 +121,11 @@ body {
 }
 
 @media screen and (max-width: 64em) {
+  .layout-header .header-menu {
+    display: none;
+  }
   .layout-header .menu-button {
     display: inline-block;
-  }
-  .layout-header #layout-sidebar {
-    display: none;
-    top: 98px;
-    left: -300px;
-    -webkit-transition: left 0.2s;
-    transition: left 0.2s;
-    z-index: 999;
-  }
-  .layout-header #layout-sidebar .active {
-    display: inline-block;
-    left: 0;
-  }
-  .layout-header #layout-sidebar .layout-mask {
-    z-index: 998;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 98px;
-    left: 0;
-    opacity: 0.7;
-    background-color: #333333;
-    -webkit-animation: layoutMaskFade 0.3s;
-    animation: layoutMaskFade 0.3s;
   }
 }
 

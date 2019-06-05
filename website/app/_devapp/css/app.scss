@@ -11,6 +11,7 @@ body{
   background-color:$background-color;
 }
 
+
 .layout-header{
 
 
@@ -39,6 +40,7 @@ body{
       background-color: $secondary-color;
     }
     i{
+      width:inherit;
       line-height:inherit;
     }
   }
@@ -72,13 +74,33 @@ body{
     .menu-highlight{
       background-color:darken($primary-color,7%);
     }
+    .account-button{
+      float: left;
+      margin:0;
+      padding: 0;
+      height: 100%;
+      .p-button{
+          width:$topbar-height;
+          height:$topbar-height;
+          background-color:darken($primary-color,7%);
+
+
+
+      }
+
+    }
 
   }
 
 }
-#layout-sidebar{
+#layout-content{
+  padding-top:$topbar-height!important;
+  #sidebarMenu{
+
+  }
 
 }
+
 .hidden { display:none; }
 .cancel-btn{
   background-color:$background-color!important;
@@ -97,79 +119,65 @@ body{
 #app{
   position:relative;
 }
-.LoginForm{
-  display:inline-block;
-  padding:5px;
+.LoginForm {
+
+  padding: 5px;
   border-radius: 10px;
-  position:absolute;
-  top:50%;
-  left:50%;
-  max-width:400px;
-  margin-right:-50%;
-  transform:translate(-50%,50%);
-  border:2px solid $primary-color;
+  width:400px;
+
+  border: 2px solid $primary-color;
   background-color: $background-color-alt;
-  #LoginHeader{
-    img{
-      width:200px;
-      height:auto;
+
+  #LoginHeader {
+    img {
+      width: 200px;
+      height: auto;
     }
   }
-  #LoginSubmit{
+
+  #LoginSubmit {
 
     margin-top: 60px;
   }
-  .LoginField{
 
-    margin:20px auto;
+  .LoginField {
+
+    margin: 20px auto;
 
 
-
-    h1{
-      color:$text-color;
+    h1 {
+      color: $text-color;
     }
 
 
   }
-
-
-
-
 
 
 }
+
 @media screen and (max-width: 64em) {
-  $topbar-height-mobile:40px;
+  //$topbar-height-mobile:30px;
   .layout-header{
+    .header-menu{
+      display:none;
+      //height:$topbar-height-mobile;
+    }
     .menu-button{
       display: inline-block;
+     // height:$topbar-height-mobile;
+
     }
 
-    #layout-sidebar {
-      display:none;
-      top: 98px;
-      left: -300px;
-      -webkit-transition: left 0.2s;
-      transition: left 0.2s;
-      z-index: 999;
 
-      .active{
-        display:inline-block;
-        left:0;
-      }
-      .layout-mask {
-        z-index: 998;
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 98px;
-        left: 0;
-        opacity: .7;
-        background-color: #333333;
-        -webkit-animation: layoutMaskFade .3s;
-        animation: layoutMaskFade .3s;
-      }
-    }
   }
+  #layout-content{
+    //padding-top:$topbar-height-mobile;
+    #layout-sidebar{
+     // padding-top: $topbar-height;
+    }
+
+  }
+
+
 }
 

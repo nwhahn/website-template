@@ -1,14 +1,22 @@
-import React, { Component, Fragment } from 'react';
-import {InputText} from 'primereact/inputtext';
-import {Password} from 'primereact/password';
-import {Button} from 'primereact/button';
-import {Messages} from 'primereact/messages';
-import {InputMask} from 'primereact/inputmask';
-import {HashRouter,Link} from 'react-router-dom';
-require('jquery');
+//Dependencies
+import React, { Component} from 'react';
+import {Route,Link,HashRouter} from 'react-router-dom';
 import classNames from 'classnames';
-//import {Button,InputText,Password} from 'primereact';
+require('jquery');
+
+//Global Components - react
+import {Menu} from 'primereact/menu'
+import {Button} from 'primereact/button'
 import { render } from 'react-dom';
+import {Growl} from 'primereact/growl';
+
+//Global Components - user defined
+import { Login } from './login';
+import {SidebarMenu} from './sidebar';
+
+//Pages
+import {HomeComponent} from './pages/home/HomeComponent'
+import {AccountSettings} from './pages/account/account_settings'
 //import { asyncComponent } from 'react-async-component';
 
 /** We are importing our index.php my app Vairaible */
@@ -17,16 +25,16 @@ import myApp from 'myApp';
 /* globals __webpack_public_path__ */
 __webpack_public_path__ = `${window.STATIC_URL}/app/assets/bundle/`;
 
-class Myapp extends Component {
+class Myapp_old extends Component {
     constructor(){
         super();
         this.state={
             mobileMenuActive:false,
-            loginMenu:false,
         }
         this.onMenuButtonClick=this.onMenuButtonClick.bind(this);
         this.onMenuButtonKeyDown = this.onMenuButtonKeyDown.bind(this);
         this.onSidebarClick = this.onSidebarClick.bind(this);
+        this.ActivateMenu=this.ActivateMenu.bind(this);
     }
 
     onMenuButtonClick(){
@@ -50,9 +58,11 @@ class Myapp extends Component {
     bindMenuDocumentClickListener() {
         if (!this.menuDocumentClickListener) {
             this.menuDocumentClickListener = (event) => {
-                if (!this.isMenuButtonClicked(event) && !this.sidebar.contains(event.target)) {
-                    this.setState({mobileMenuActive: false});
-                    this.unbindMenuDocumentClickListener();
+                if (!this.isMenuButtonClicked(event)){
+                    if(this.sidebar==null || !this.sidebar.contains(event.target)) {
+                        this.setState({mobileMenuActive: false});
+                        this.unbindMenuDocumentClickListener();
+                    }
                 }
             };
 
@@ -74,15 +84,27 @@ class Myapp extends Component {
             this.setState({ mobileMenuActive: false});
         }
     }
+    ActivateMenu(menu){
+        this.setState({previous:'main'});
+        this.setState({page:menu});
+    }
+
 
 
     render() {
 
         const { user : { name, email }, logged } = myApp;
         let layout_content;
-        if(this.state.loginMenu===true){
-            layout_content=<Login/>;
+        if(this.state.page==='login'){
+            layout_content=<Login handler = {this.cancel}/>;
         }
+        let layout_sidebar=
+            <div id="layout-sidebar" ref={el => this.sidebar = el} onClick={this.onSidebarClick}>
+                <div className="layout-menu">
+                    <a onClick={(e)=>this.ActivateMenu('login')}>Login</a>
+                </div>
+            </div>;
+
 
         return (
 
@@ -93,13 +115,14 @@ class Myapp extends Component {
                     </span>
                     <ul className="header-menu p-unselectable-text">
                         <li className="menu-highlight">
-                            <a onClick={(e)=>this.setState({loginMenu:true})}>Login</a>
+                            <a onClick={(e)=>this.ActivateMenu('login')}>Login</a>
                         </li>
                     </ul>
                 </div>
-                <div id="layout-sidebar" ref={el => this.sidebar = el} className={classNames({'active': this.state.mobileMenuActive})} onClick={this.onSidebarClick}>
-                    <div>SSSSS</div>
-                </div>
+                {this.state.mobileMenuActive ?
+                    layout_sidebar :null
+                }
+
                 <div id="layout-content">
                     {layout_content}
                 </div>
@@ -117,167 +140,165 @@ class Myapp extends Component {
     }
 }
 
-
-class Login extends Component{
-    constructor(props){
-        super(props);
-        this.loginClick=this.loginClick.bind(this);
-        this.handleEmail=this.handleEmail.bind(this);
-        this.CancelClick=this.CancelClick.bind(this);
-        document.addEventListener("mousedown", this.handleClick,false)
-        this.state={
-            label:'Sign In',
-            icon:'',
-            sign_up:false,
-            email_checked:false,
-            email:'',
-            password:'',
-            password_confirm:'',
-            confirm:'',
-            first_name:'',
-            last_name:'',
-            phone:''
-
+class Myapp extends Component{
+    constructor() {
+        super();
+        this.state ={
+            mobileMenuActive:false,
+            sidebarActive:false,
+            contentPage:'main',
+            loginScreen:false,
+            loggedIn:true,
         }
+        this.initialState={
+            mobileMenuActive:false,
+            sidebarActive:false,
+            contentPage:'main',
+            loginScreen:false,
+            loggedIn:true,
+        }
+        this.onMenuButtonClick=this.onMenuButtonClick.bind(this);
+        this.onMenuButtonKeyDown = this.onMenuButtonKeyDown.bind(this);
+        this.onLoginButtonClick=this.onLoginButtonClick.bind(this);
+        this.onLoginButtonKeyDown = this.onLoginButtonKeyDown.bind(this);
+        this.loginBtn=this.loginBtn.bind(this);
+        this.logOut=this.logOut.bind(this);
+        this.showMessage=this.showMessage.bind(this);
+        this.clearMessages=this.clearMessages.bind(this);
 
     }
-
-    loginClick(){
-        console.log('clicked');
-
+    onMenuButtonClick(){
+        this.toggleMenu();
+    }
+    isMenuButtonClicked(event) {
+        return event.target === this.menuButton || this.menuButton.contains(event.target);
+    }
+    onMenuButtonKeyDown(event){
+        if (event.key === 'Enter') {
+            this.toggleMenu();
+        }
     }
 
-    successCleanup(){
-        document.removeEventListener('mousedown',this.handleClick,false)
+    toggleMenu() {
+        this.setState({
+            mobileMenuActive: !this.state.mobileMenuActive,
+            sidebarActive:!this.state.sidebarActive
+        }, () => {
+            if (this.state.mobileMenuActive)
+                this.bindMenuDocumentClickListener();
+            else
+                this.unbindMenuDocumentClickListener();
+        });
     }
-    handleEmail(e){
-        this.setState({email: e.target.value});
+    bindMenuDocumentClickListener() {
+        if (!this.menuDocumentClickListener) {
+            this.menuDocumentClickListener = (event) => {
+                if (!this.isMenuButtonClicked(event)){
+                    if(this.sidebar==null || !this.sidebar.contains(event.target)) {
+                        this.setState({mobileMenuActive: false});
+                        this.unbindMenuDocumentClickListener();
+                    }
+                }
+            };
 
-
+            document.addEventListener('click', this.menuDocumentClickListener);
+        }
     }
-    CancelClick(){
-
+    unbindMenuDocumentClickListener() {
+        if (this.menuDocumentClickListener) {
+            document.removeEventListener('click', this.menuDocumentClickListener);
+            this.menuDocumentClickListener = null;
+        }
     }
-    handlePassword(){
-
+    hideSidebar(){
+        this.setState({
+            sidebarActive:false
+        })
     }
-    handleConfirmPassword(){
+    showLogin(){
 
+        this.setState({
+            loginScreen:true,sidebarActive:false
+        })
     }
-    RegisterFields(){
-
+    hideLogin(){
+        this.setState({
+            loginScreen:false
+        })
     }
-    handleClick=(e)=>{
+    onLoginButtonClick(){
+        this.showLogin();
+    }
+    onLoginButtonKeyDown(event){
+        if (event.key === 'Enter') {
+            this.showLogin();
+        }
+    }
+    loginBtn(){
 
-        if(this.EmailField.contains(e.target)){
-            this.state.email_checked=false;
-           // console.log(this.state.email_checked);
+        return <a ref={el => this.loginButton = el} onClick={this.onLoginButtonClick} onKeyDown={this.onLoginButtonKeyDown}>
+            Login
+        </a>;
+    }
+    logOut(){
+
+        this.setState({loggedIn:false})
+        this.showMessage('info','Status Message','You have been logged out');
+    }
+    showMessage(severity,summary,text){
+        this.messages.show({severity:severity,summary:summary,detail:text})
+    }
+    clearMessages(){
+        this.messages.clear();
+    }
+
+    render() {
+        let loginPage=<Login visible={this.state.loginScreen} hide={this.hideLogin.bind(this)}/>;
+        let login_button= <a ref={el => this.loginButton = el} onClick={this.onLoginButtonClick} onKeyDown={this.onLoginButtonKeyDown}>
+                            Login
+                        </a>;
+        let layout_content;
+        let sidebarMenu=<SidebarMenu id='layout-sidebar' visible={this.state.sidebarActive} hide={this.hideSidebar.bind(this)} login={this.loginBtn.bind(this)}/>;
+        let account_field;
+        if(this.state.loggedIn) {
+            let account_items=[
+                {label: 'Account Settings', icon: 'pi pi-fw pi-cog', command:()=>{ window.location.hash="/account"; }},
+                {label: 'Sign Out', icon: 'pi pi-fw pi-power-off', command:()=>{this.logOut();}}
+            ];
+            account_field=<div className={"account-button"}>
+                            <Menu model={account_items} popup={true} ref={el => this.accountMenu = el}/>
+                            <Button icon="pi pi-user" onClick={(event) => this.accountMenu.toggle(event)}/>
+                        </div>;
+
         }
         else{
-            //console.log(this.state.email_checked);
-            if(!this.state.email_checked){
-                $.ajax({
-                    url: './ajax_php/ajax_user.php',
-                    type: "GET",
-                    data:{email:this.state.email},
-                    success: function(data) {
-                        console.log(data);
-                        if(data==='1'){
-                            console.log('here');
-                            this.state.label='Sign In';
-                            this.state.sign_up=false;
-                        }
-                        else{
-                            this.state.label='Register';
-                            this.state.sign_up=true;
-                        }
-                    }.bind(this),
-                    error: function(xhr, status, err) {
-                        //console.log('error')
-                    }.bind(this)
-                });
-                //console.log(is_user);
-
-                this.state.email_checked=true;
-
-
-               // console.log(this.state.label);
-              //  console.log(this.state.email_checked);
-
-            }
+            account_field=<li className="menu-highlight">
+                {login_button}
+            </li>;
         }
-
-
-    }
-
-    render(){
-
-
         return(
-            <div className='LoginForm p-grid p-fluid'>
-                <Messages ref={(el) => this.messages = el} />
-                <div id='LoginHeader' className='LoginField p-col-12 p-md-6 p-offset-3'>
-                    <img alt="logo" src="./app/assets/img/primereact-logo.png" />
-                </div>
-                <div ref={node=>this.EmailField=node} id='LoginEmail' className='LoginField p-col-12 p-offset-6'>
-
-                        <span className="p-float-label">
-                            <InputText id="input-email" type="email" value={this.state.email} onChange={(e) => this.handleEmail(e)}/>
-                            <label htmlFor="input-email">Email</label>
+            <div className="layout-wrapper">
+                <div className="layout-header">
+                        <span ref={el => this.menuButton = el} className="menu-button" tabIndex="0" onClick={this.onMenuButtonClick} onKeyDown={this.onMenuButtonKeyDown}>
+                            <i className="pi pi-bars"/>
                         </span>
+                    <ul className="header-menu p-unselectable-text">
+                        {account_field}
+                    </ul>
                 </div>
-                <div id='LoginPassword' className='LoginField p-col-12 p-offset-6'>
-                    <span className="p-float-label">
-                        <Password id="input-password" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})}/>
-                        <label htmlFor="input-password">Password</label>
-                    </span>
+                <div id="layout-content">
+                    <Growl ref={(el) => this.messages = el} />
+                    <Route exact path="/" component={HomeComponent}/>
+                    <Route path="/account" component={AccountSettings}/>
+                    {sidebarMenu}
                 </div>
-                {/*{this.state.sign_up ?
-                    this.RegisterFields()
+                {loginPage}
 
 
-                    :null
-
-                }*/}
-                <div id='RegisterPasswordConfirm' className='LoginField p-float-label p-col-12'>
-                    <span className="p-float-label">
-                        <Password id="input-confirm-password" value={this.state.password_confirm}
-                                  onChange={(e) => this.setState({password_confirm: e.target.value})} feedback={this.state.sign_up}/>
-                        <label htmlFor="input-confirm-password">Confirm Password</label>
-                    </span>
-                </div>
-                <div id='RegisterFirstName' className='LoginField p-float-label p-col-6'>
-                    <span className="p-float-label">
-                        <InputText id="input-first-name" type="text" value={this.state.first_name} onChange={(e) => this.setState({first_name: e.target.value})}/>
-                        <label htmlFor="input-first-name">First Name</label>
-                    </span>
-                </div>
-                <div id='RegisterLastName' className='LoginField p-float-label p-col-6'>
-                    <span className="p-float-label">
-                        <InputText id="input-last-name" type="text" value={this.state.last_name} onChange={(e) => this.setState({last_name: e.target.value})}/>
-                        <label htmlFor="input-last-name">Last Name</label>
-                    </span>
-                </div>
-
-                <div id='RegisterPhone' className='LoginField p-float-label p-col-12 '>
-                     <span className="p-float-label">
-                        <InputMask id="input-phone" mask="(999) 999-9999? x99999" value={this.state.phone}
-                                   onChange={(e) => this.setState({phone: e.value})}/>
-                       <label htmlFor="input-phone">Phone</label>
-                     </span>
-
-
-                </div>
-
-
-                <div id='LoginSubmit' className='LoginField p-col-12 p-md-6'>
-                    <Button ref={node=>this.Submit=node} className="submit-btn" onClick={this.loginClick} label={this.state.label} icon="pi pi-check"/>
-                    <Button ref={node=>this.Cancel=node} className="cancel-btn" onClick={this.CancelClick} label="Cancel"/>
-                </div>
             </div>
-
         );
     }
 }
+
 
 render(<HashRouter><Myapp/></HashRouter> ,document.getElementById('app'));
