@@ -14,6 +14,18 @@ body {
   z-index: 999;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
 }
+.layout-header #HeaderImg {
+  display: inline-block;
+  height: 60px;
+  line-height: 60px;
+}
+.layout-header #HeaderImg a {
+  height: inherit;
+}
+.layout-header #HeaderImg a img {
+  padding: 5px;
+  height: inherit;
+}
 .layout-header .menu-button {
   display: none;
   color: #fff;
@@ -120,12 +132,48 @@ body {
   color: black;
 }
 
+.form-fieldset {
+  padding: 30px;
+}
+.form-fieldset .AccountField {
+  padding: 20px;
+}
+
+.save-page {
+  bottom: 0;
+  position: fixed;
+  padding: 15px;
+}
+.save-page button {
+  width: 100px;
+  height: 50px;
+}
+
 @media screen and (max-width: 64em) {
+  .layout-header {
+    text-align: center;
+  }
+  .layout-header #HeaderImg img {
+    height: inherit;
+    width: auto;
+  }
   .layout-header .header-menu {
     display: none;
   }
   .layout-header .menu-button {
+    float: left;
     display: inline-block;
+  }
+
+  #layout-content .p-sidebar-close {
+    font-size: 24px;
+  }
+  #layout-content #sidebarMenu {
+    padding: 0;
+  }
+  #layout-content #sidebarMenu .p-menu {
+    width: 100% !important;
+    border: none !important;
   }
 }
 

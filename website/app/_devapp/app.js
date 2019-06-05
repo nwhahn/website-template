@@ -258,7 +258,7 @@ class Myapp extends Component{
                             Login
                         </a>;
         let layout_content;
-        let sidebarMenu=<SidebarMenu id='layout-sidebar' visible={this.state.sidebarActive} hide={this.hideSidebar.bind(this)} login={this.loginBtn.bind(this)}/>;
+        let sidebarMenu=<SidebarMenu id='layout-sidebar' visible={this.state.sidebarActive} loggedIn={this.state.loggedIn} hide={this.hideSidebar.bind(this)} logOut={this.logOut.bind(this)} login={this.onLoginButtonClick.bind(this)}/>;
         let account_field;
         if(this.state.loggedIn) {
             let account_items=[
@@ -279,17 +279,25 @@ class Myapp extends Component{
         return(
             <div className="layout-wrapper">
                 <div className="layout-header">
-                        <span ref={el => this.menuButton = el} className="menu-button" tabIndex="0" onClick={this.onMenuButtonClick} onKeyDown={this.onMenuButtonKeyDown}>
-                            <i className="pi pi-bars"/>
-                        </span>
+                    <span ref={el => this.menuButton = el} className="menu-button" tabIndex="0" onClick={this.onMenuButtonClick} onKeyDown={this.onMenuButtonKeyDown}>
+                        <i className="pi pi-bars"/>
+                    </span>
+                    <div id='HeaderImg'>
+                        <Link to="/">
+                            <img alt="logo" src="./app/assets/img/primereact-logo.png" />
+                        </Link>
+                    </div>
                     <ul className="header-menu p-unselectable-text">
                         {account_field}
                     </ul>
                 </div>
-                <div id="layout-content">
+                
+                <div id="layout-content" className="p-growl-container">
+
                     <Growl ref={(el) => this.messages = el} />
+
                     <Route exact path="/" component={HomeComponent}/>
-                    <Route path="/account" component={AccountSettings}/>
+                    <Route path="/account" component={AccountSettings} message={this.showMessage}/>
                     {sidebarMenu}
                 </div>
                 {loginPage}

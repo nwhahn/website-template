@@ -6,6 +6,8 @@ $background-color-alt:#fff;
 $text-color:black;
 $text-color-alt:#fff;
 $topbar-height:60px;
+$menubar-height:30px;
+$content-offset:$topbar-height;
 
 body{
   background-color:$background-color;
@@ -25,6 +27,20 @@ body{
   width: 100%;
   z-index: 999;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+  #HeaderImg{
+      display: inline-block;
+      height:$topbar-height;
+
+      line-height:$topbar-height;
+      a{
+        height:inherit;
+        img{
+          padding:5px;
+          height:inherit;
+        }
+      }
+
+  }
   .menu-button{
     display:none;
     color: $background-color-alt;
@@ -94,7 +110,8 @@ body{
 
 }
 #layout-content{
-  padding-top:$topbar-height!important;
+
+  padding-top:$content-offset!important;
   #sidebarMenu{
 
   }
@@ -154,15 +171,40 @@ body{
 
 
 }
+.form-fieldset{
+  padding:30px;
+  .AccountField{
+    padding:20px;
+  }
+}
+.save-page{
 
+  bottom: 0;
+  position:fixed;
+  padding:15px;
+
+  button{
+    width:100px;
+    height:50px;
+  }
+}
 @media screen and (max-width: 64em) {
   //$topbar-height-mobile:30px;
   .layout-header{
+    text-align: center;
+    #HeaderImg{
+
+      img{
+        height:inherit;
+        width:auto;
+      }
+    }
     .header-menu{
       display:none;
       //height:$topbar-height-mobile;
     }
     .menu-button{
+      float:left;
       display: inline-block;
      // height:$topbar-height-mobile;
 
@@ -172,7 +214,15 @@ body{
   }
   #layout-content{
     //padding-top:$topbar-height-mobile;
-    #layout-sidebar{
+    .p-sidebar-close{
+      font-size:24px;
+    }
+    #sidebarMenu{
+      padding:0;
+      .p-menu{
+        width:100%!important;
+        border:none!important;
+      }
      // padding-top: $topbar-height;
     }
 
