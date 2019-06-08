@@ -6,7 +6,7 @@ $user = (object) [
     'email' => 'janedoe@gmail.com',
     'logged' => true
 ];
-$title='Generation Electrical Supply';
+$title='Website';
 
 ?>
 <!doctype html>

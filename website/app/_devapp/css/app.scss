@@ -13,7 +13,10 @@ body{
   background-color:$background-color;
 }
 
-
+.p-inputtext{
+  :enabled{
+  }
+}
 .layout-header{
 
 
@@ -69,6 +72,11 @@ body{
     li{
       display: inline-block;
       height: 100%;
+      float:right;
+
+
+    }
+    .menu-highlight{
       span, a{
         text-decoration: none;
         color: $background-color-alt;
@@ -80,12 +88,67 @@ body{
         -webkit-transition: background-color 0.2s;
         transition: background-color 0.2s;
 
-
       }
       :hover,:focus{
         background-color:$secondary-color!important;
       }
 
+
+    }
+    .account-button{
+      :hover{
+        color:$secondary-color;
+      }
+    }
+    .search-icon,.search-bar{
+      display:inline-block;
+      float:left;
+      height: 100%;
+
+      .search-input{
+        float:left;
+      }
+
+      span{
+        margin:0;
+        width:inherit;
+        height:inherit;
+        text-decoration: none;
+        color: $text-color;
+        text-align:center;
+        line-height: $topbar-height;
+        :hover{
+          color:$background-color-alt;
+        }
+
+      }
+      #search-field{
+        padding:5px;
+        height:inherit;
+        input{
+          width:400px;
+        }
+
+        margin:5px auto;
+        align-content: center;
+      }
+
+
+
+    }
+    .search-bar{
+      display:none;
+    }
+    .active{
+      display:inline-block!important;
+      -webkit-transition: all .6s linear;
+      -moz-transition: all .6s linear;
+      -o-transition: all .6s linear;
+      transition: all .6s linear;
+    }
+
+    .search-icon{
+      width:$topbar-height;
     }
     .menu-highlight{
       background-color:darken($primary-color,7%);
@@ -111,10 +174,27 @@ body{
 }
 #layout-content{
 
-  padding-top:$content-offset!important;
+  padding-top: 10px;
+  .form-fieldset{
+    padding:30px;
+    .AccountField{
+      padding:20px;
+    }
+  }
   #sidebarMenu{
 
   }
+
+}
+#nav-menu{
+  width:100%!important;
+  border:none;
+  border-radius:0;
+  background-color:$secondary-color;
+  margin-top:$topbar-height;
+  margin-left:0;
+  margin-right:0;
+
 
 }
 
@@ -132,6 +212,10 @@ body{
     background-color:$secondary-color;
   }
 
+}
+
+.p-menu-item{
+  width:100%;
 }
 #app{
   position:relative;
@@ -171,13 +255,12 @@ body{
 
 
 }
-.form-fieldset{
-  padding:30px;
-  .AccountField{
-    padding:20px;
+.contact{
+  .p-editor-container{
+    height:70%;
   }
 }
-.save-page{
+.save-page,.submitPage{
 
   bottom: 0;
   position:fixed;
@@ -187,6 +270,9 @@ body{
     width:100px;
     height:50px;
   }
+}
+.submitPage{
+  right:0;
 }
 @media screen and (max-width: 64em) {
   //$topbar-height-mobile:30px;
@@ -213,12 +299,23 @@ body{
 
   }
   #layout-content{
+    padding-top:50px;
     //padding-top:$topbar-height-mobile;
     .p-sidebar-close{
       font-size:24px;
     }
     #sidebarMenu{
       padding:0;
+      top:$content-offset;
+      .p-inputgroup{
+        display:inline-block;
+        padding:10px;
+        align-content: center;
+        margin:auto;
+      }
+      .p-sidebar-close{
+        display:none;
+      }
       .p-menu{
         width:100%!important;
         border:none!important;
@@ -227,7 +324,17 @@ body{
     }
 
   }
+  #nav-menu{
+    display:none;
+  }
 
 
+}
+@media screen and (max-width:300px){
+  .layout-header{
+    img{
+      display: none;
+    }
+  }
 }
 

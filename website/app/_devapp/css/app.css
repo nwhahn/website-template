@@ -55,8 +55,9 @@ body {
 .layout-header .header-menu li {
   display: inline-block;
   height: 100%;
+  float: right;
 }
-.layout-header .header-menu li span, .layout-header .header-menu li a {
+.layout-header .header-menu .menu-highlight span, .layout-header .header-menu .menu-highlight a {
   text-decoration: none;
   color: #fff;
   min-width: 120px;
@@ -67,8 +68,53 @@ body {
   -webkit-transition: background-color 0.2s;
   transition: background-color 0.2s;
 }
-.layout-header .header-menu li :hover, .layout-header .header-menu li :focus {
+.layout-header .header-menu .menu-highlight :hover, .layout-header .header-menu .menu-highlight :focus {
   background-color: #7ade4b !important;
+}
+.layout-header .header-menu .account-button :hover {
+  color: #7ade4b;
+}
+.layout-header .header-menu .search-icon, .layout-header .header-menu .search-bar {
+  display: inline-block;
+  float: left;
+  height: 100%;
+}
+.layout-header .header-menu .search-icon .search-input, .layout-header .header-menu .search-bar .search-input {
+  float: left;
+}
+.layout-header .header-menu .search-icon span, .layout-header .header-menu .search-bar span {
+  margin: 0;
+  width: inherit;
+  height: inherit;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  line-height: 60px;
+}
+.layout-header .header-menu .search-icon span :hover, .layout-header .header-menu .search-bar span :hover {
+  color: #fff;
+}
+.layout-header .header-menu .search-icon #search-field, .layout-header .header-menu .search-bar #search-field {
+  padding: 5px;
+  height: inherit;
+  margin: 5px auto;
+  align-content: center;
+}
+.layout-header .header-menu .search-icon #search-field input, .layout-header .header-menu .search-bar #search-field input {
+  width: 400px;
+}
+.layout-header .header-menu .search-bar {
+  display: none;
+}
+.layout-header .header-menu .active {
+  display: inline-block !important;
+  -webkit-transition: all 0.6s linear;
+  -moz-transition: all 0.6s linear;
+  -o-transition: all 0.6s linear;
+  transition: all 0.6s linear;
+}
+.layout-header .header-menu .search-icon {
+  width: 60px;
 }
 .layout-header .header-menu .menu-highlight {
   background-color: #378a0d;
@@ -86,8 +132,24 @@ body {
 }
 
 #layout-content {
-  padding-top: 60px !important;
+  padding-top: 10px;
 }
+#layout-content .form-fieldset {
+  padding: 30px;
+}
+#layout-content .form-fieldset .AccountField {
+  padding: 20px;
+}
+#nav-menu {
+  width: 100% !important;
+  border: none;
+  border-radius: 0;
+  background-color: #7ade4b;
+  margin-top: 60px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .hidden {
   display: none;
 }
@@ -105,6 +167,10 @@ body {
 }
 .submit-btn :hover {
   background-color: #7ade4b;
+}
+
+.p-menu-item {
+  width: 100%;
 }
 
 #app {
@@ -132,21 +198,22 @@ body {
   color: black;
 }
 
-.form-fieldset {
-  padding: 30px;
-}
-.form-fieldset .AccountField {
-  padding: 20px;
+.contact .p-editor-container {
+  height: 70%;
 }
 
-.save-page {
+.save-page, .submitPage {
   bottom: 0;
   position: fixed;
   padding: 15px;
 }
-.save-page button {
+.save-page button, .submitPage button {
   width: 100px;
   height: 50px;
+}
+
+.submitPage {
+  right: 0;
 }
 
 @media screen and (max-width: 64em) {
@@ -165,15 +232,37 @@ body {
     display: inline-block;
   }
 
+  #layout-content {
+    padding-top: 50px;
+  }
   #layout-content .p-sidebar-close {
     font-size: 24px;
   }
   #layout-content #sidebarMenu {
     padding: 0;
+    top: 60px;
+  }
+  #layout-content #sidebarMenu .p-inputgroup {
+    display: inline-block;
+    padding: 10px;
+    align-content: center;
+    margin: auto;
+  }
+  #layout-content #sidebarMenu .p-sidebar-close {
+    display: none;
   }
   #layout-content #sidebarMenu .p-menu {
     width: 100% !important;
     border: none !important;
+  }
+
+  #nav-menu {
+    display: none;
+  }
+}
+@media screen and (max-width: 300px) {
+  .layout-header img {
+    display: none;
   }
 }
 
