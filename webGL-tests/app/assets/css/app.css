@@ -1,0 +1,16 @@
+body {
+  background-color: white; }
+
+.three-canvas {
+  height: 500px !important; }
+
+#info {
+  position: absolute;
+  color: blue;
+  top: 10px;
+  height: 100px;
+  margin: 15px;
+  width: 100%;
+  text-align: center;
+  z-index: 100;
+  display: block; }

@@ -1,7 +1,7 @@
 {
-  "name": "generation-electrical-supply",
+  "name": "webgl-tests",
   "version": "1.0.0",
-  "description": "Website Redesign",
+  "description": "Testing webGL libraries",
   "main": "index.js",
   "dependencies": {
     "jquery": "^3.4.1",
@@ -16,10 +16,7 @@
     "react-transition-group": "^4.0.1",
     "classnames": "^2.2.6",
     "typescript": "^3.4.5",
-    "primeflex": "^1.0.0-rc.1",
-    "primereact": "^3.1.3",
-    "primeicons": "^1.0.0",
-    "quill": "^1.3.6"
+    "three": "^0.105.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -58,10 +55,15 @@
     "type": "git",
     "url": "git+https://github.com/nwhahn/website-template.git"
   },
+  "keywords": [
+    "webGL",
+    "3d",
+    "javascript"
+  ],
   "author": "Nate Hahn",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nwhahn/generationelectricalsupply-website/issues"
+    "url": "https://github.com/nwhahn/website-template/issues"
   },
-  "homepage": "https://github.com/nwhahn/generationelectricalsupply-website#readme"
+  "homepage": "https://github.com/nwhahn/website-template#readme"
 }
