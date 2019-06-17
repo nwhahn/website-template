@@ -1,5 +1,70 @@
 body {
-  background-color: #444;
+  background-color: #141414;
+}
+
+.product-img-box img {
+  width: 60%;
+  height: auto;
+  margin: 20px 20%;
+  border: 1px solid #7ade4b;
+  border-radius: 3px;
+}
+
+.p-highlight a {
+  background-color: #44ab10 !important;
+}
+
+.p-accordion .p-accordion-content {
+  background-color: transparent !important;
+}
+.p-accordion .p-accordion-content .p-card {
+  background-color: #7ade4b !important;
+  color: black;
+}
+
+.pricing {
+  padding: 20px;
+}
+.pricing .price {
+  color: #7ade4b;
+  font-size: 36px;
+  text-align: center;
+  padding: 15px;
+}
+.pricing button .pi {
+  font-size: 24px;
+}
+
+.section .section-header {
+  display: inline-block;
+  padding: 15px;
+  width: 100%;
+}
+.section .section-header .section-header-title {
+  color: #44ab10;
+  font-size: 24px;
+  display: inline-block;
+}
+.section .section-header .section-header-border {
+  float: right;
+  display: inline-block;
+  width: inherit;
+}
+.section .section-header .section-header-border .section-header-inner-border {
+  border: 1px solid #7ade4b;
+}
+.section .section-content {
+  padding: 15px;
+}
+.section .section-content .description {
+  color: #545454;
+  font-size: 20px;
+}
+.section .section-content .product-options {
+  padding: 15px;
+}
+.section .section-content .product-options .product-option .option-header {
+  color: #44ab10;
 }
 
 .layout-header {
@@ -155,10 +220,10 @@ body {
 }
 
 .cancel-btn {
-  background-color: #444 !important;
+  background-color: #141414 !important;
 }
 .cancel-btn :hover {
-  background-color: #848484;
+  background-color: #545454;
 }
 
 .submit-btn {
@@ -188,8 +253,19 @@ body {
   width: 200px;
   height: auto;
 }
-.LoginForm #LoginSubmit {
-  margin-top: 60px;
+.LoginForm .p-tabview .p-tabview-nav {
+  border-radius: 4px 4px 0 0;
+  padding: 10px;
+  background-image: -webkit-linear-gradient(left, #44ab10, #7ade4b) !important;
+}
+.LoginForm .p-tabview .p-tabview-nav a {
+  background-color: transparent !important;
+  color: #fff;
+  border-color: black;
+}
+.LoginForm .p-tabview .p-tabview-nav .p-highlight a {
+  background-color: #fff !important;
+  color: black !important;
 }
 .LoginForm .LoginField {
   margin: 20px auto;

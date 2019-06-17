@@ -9,24 +9,63 @@ class userClass extends database
         'email'=>'',
         'first_name'=>'',
         'last_name'=>'',
-        'account_type'=>''
+        'phone'=>'',
+        'account_type'=>'',
 
     );
-    public function __construct($email=null, $password=null,$options=null)
+    public function __construct()
     {
+        parent::__construct();
 
-        if($email=='null'){
-            if(create_user($email,$password)){
-                return;
-            }
-            else{
-                die ('failed to create user please try again');
-            }
+    }
+
+    public function login($email,$password){
+
+        $user_fields=$this->get_user($email);
+        if($this->verify_password($password,$user_fields['password'])){
+            $this->unid=$user_fields['unid'];
+            $this->user_obj['first_name']=json_decode($user_fields['name'])->{'first'};
+            $this->user_obj['last_name']=json_decode($user_fields['name'])->{'last'};
+            $this->user_obj['email']=$user_fields['email'];
+            $this->user_obj['phone']=$user_fields['phone'];
+            return $this;
+        }
+        else{
+            return 'Invalid Login';
         }
 
 
+    }
+    public function get_user($email){
+        $user_fields=$this->get_list('user','email',$email)->fetch();
+        if(isset($user_fields)){
+            return $user_fields;
+        }
+        else{
+            return 'Invalid user';
+        }
+
 
     }
+    public function create_user($email,$password,$name,$phone){
+
+        $password= $this->encrypt_password($password);
+        $data=[
+          'email'=>$email,
+          'password'=>$password,
+          'name'=>json_encode($name),
+          'phone'=>$phone
+        ];
+       // $this->activateTestOutput();
+        return $this->add_object('user',$data);
+
+
+    }
+
+
+
+
+
     public function encrypt_password($password){
         $options=[
             'cost'=>12
@@ -49,22 +88,19 @@ class userClass extends database
         $msg='';
         return $msg;
     }
-    public function is_user($email){
-        $users=['nathan@nwhahn.com','nathanh@generationelectricalsupply.com'];
 
-        return in_array($email,$users);
 
-    }
-    private function create_user($username,$password){
 
-        echo $this->secure_password($password);
-    }
+
     private function secure_password($password){
         return 'Not Secure-'.$password;
     }
     protected function update_field($field,$value){
-        $this->$field=$value;
+        $this->user_obj[$field]=$value;
 
+    }
+    public function get_unid(){
+        return $this->unid;
     }
     public function get_field($field){
 

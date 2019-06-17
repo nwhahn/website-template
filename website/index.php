@@ -1,12 +1,9 @@
 
 
 <?php
-$user = (object) [
-    'name' => 'Jane Doe',
-    'email' => 'janedoe@gmail.com',
-    'logged' => true
-];
+$user = (object) [];
 $title='Website';
+
 
 ?>
 <!doctype html>
@@ -26,7 +23,6 @@ $title='Website';
             var STATIC_URL = 'http://localhost/website/';
             var myApp = {
                 user : <?php echo json_encode($user); ?>,
-                logged : <?php echo $user->logged; ?>
             };
         </script>
         <body>

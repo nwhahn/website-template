@@ -20,6 +20,7 @@ import {SidebarMenu} from './sidebar';
 import {HomeComponent} from './pages/home/HomeComponent'
 import {AccountSettings} from './pages/account/account_settings'
 import {Contact} from './pages/contact/contact'
+import {Store} from './pages/store/store'
 //import { asyncComponent } from 'react-async-component';
 
 /** We are importing our index.php my app Vairaible */
@@ -58,6 +59,8 @@ class Myapp extends Component{
         this.showMessage=this.showMessage.bind(this);
         this.clearMessages=this.clearMessages.bind(this);
         this.onSearchBtnClick=this.onSearchBtnClick.bind(this);
+        this.getNavItems=this.getNavItems.bind(this);
+
 
     }
     onMenuButtonClick(){
@@ -152,6 +155,21 @@ class Myapp extends Component{
             this.searchBarDiv.classList.add('active');
         }
     }
+    getNavItems(){
+        let nav_items=[];
+        if(window.location.hash==='#/'){
+            return null;
+        }
+
+        let location=window.location.hash.split('/');
+        let tracker='./' + location[0]+'/';
+        for(let i=1;i<location.length;i++){
+            tracker+=location[i]+'/';
+            nav_items.push({label:location[i],url:tracker});
+        }
+
+        return nav_items;
+    }
     render() {
         let loginPage=<Login visible={this.state.loginScreen} hide={this.hideLogin.bind(this)}/>;
         let login_button= <a ref={el => this.loginButton = el} onClick={this.onLoginButtonClick} onKeyDown={this.onLoginButtonKeyDown}>
@@ -176,10 +194,10 @@ class Myapp extends Component{
                 {login_button}
             </li>;
         }
-        console.log(this.props.path);
-        let nav_items=[{label:'Category'}];
+
+
         const home={icon:'pi pi-home',url:'./'}
-        let navmenu=<BreadCrumb id={'nav-menu'} model={nav_items} home={home}/>;
+        let navmenu=<BreadCrumb id={'nav-menu'} model={this.getNavItems()} home={home}/>;
         return(
             <div className="layout-wrapper">
                 <div className="layout-header">
@@ -188,7 +206,7 @@ class Myapp extends Component{
                     </span>
                     <div id='HeaderImg'>
                         <Link to="/">
-                            <img alt="logo" src="./app/assets/img/primereact-logo.png" />
+                            <img alt="logo" src="./app/assets/img/geswideful-small-300x60.png" />
                         </Link>
                     </div>
 
@@ -210,7 +228,7 @@ class Myapp extends Component{
 
                     </ul>
                 </div>
-                {navmenu}
+                {window.location.hash==='#/' ? null: navmenu}
 
                 <div id="layout-content" className="p-growl-container">
 
@@ -219,6 +237,7 @@ class Myapp extends Component{
                     <Route exact path="/" component={HomeComponent}/>
                     <Route path="/account" component={AccountSettings} message={this.showMessage}/>
                     <Route path="/contact" component={Contact} message={this.showMessage}/>
+                    <Route path="/store" component={Store}/>
                     {sidebarMenu}
                 </div>
                 {loginPage}

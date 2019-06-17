@@ -1,6 +1,6 @@
 $primary-color:#44ab10;
 $secondary-color:#7ade4b;
-$background-color:#444;
+$background-color:#141414;
 $background-color-light:lighten($background-color,25%);
 $background-color-alt:#fff;
 $text-color:black;
@@ -11,12 +11,93 @@ $content-offset:$topbar-height;
 
 body{
   background-color:$background-color;
-}
 
-.p-inputtext{
-  :enabled{
+
+}
+.product-img-box{
+ // background-color:$background-color-light;
+  img{
+    width:60%;
+    height:auto;
+    margin:20px 20%;
+    border:1px solid $secondary-color;
+    border-radius: 3px;
+
   }
 }
+.p-highlight a{
+  background-color:$primary-color!important;
+}
+.p-accordion{
+
+  .p-accordion-content{
+    background-color:transparent!important;
+    .p-card{
+      background-color:$secondary-color!important;
+      color:$text-color;
+    }
+  }
+}
+.pricing{
+  padding:20px;
+  .price{
+    color:$secondary-color;
+    font-size:36px;
+    text-align: center;
+    padding:15px;
+  }
+  button{
+    .pi{
+      font-size:24px;
+    }
+  }
+
+}
+.section{
+  .section-header{
+    display:inline-block;
+    padding:15px;
+    .section-header-title{
+      color:$primary-color;
+      font-size:24px;
+      display:inline-block;
+    }
+    .section-header-border{
+      .section-header-inner-border{
+        border:1px solid $secondary-color;
+
+      }
+      float:right;
+
+      display: inline-block;
+      width:inherit;
+
+
+    }
+    width:100%;
+  }
+  .section-content{
+    padding:15px;
+
+    .description{
+      color:$background-color-light;
+      font-size:20px;
+    }
+    .product-options{
+      padding:15px;
+      .product-option{
+        .option-header{
+          color:$primary-color;
+
+        }
+      }
+
+    }
+  }
+}
+
+
+
 .layout-header{
 
 
@@ -235,10 +316,28 @@ body{
       height: auto;
     }
   }
+  .p-tabview{
+    .p-tabview-nav{
+      border-radius: 4px 4px 0 0;
+      padding: 10px;
+      background-image: -webkit-linear-gradient(left,$primary-color,$secondary-color)!important;
+      a{
+        background-color:transparent!important;
+        color:$text-color-alt;
+        border-color:$text-color;
+      }
+      .p-highlight a{
+        background-color:$text-color-alt!important;
+        color:$text-color!important;
+      }
+
+    }
+
+  }
 
   #LoginSubmit {
 
-    margin-top: 60px;
+   // margin-top: 60px;
   }
 
   .LoginField {

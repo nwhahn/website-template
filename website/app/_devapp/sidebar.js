@@ -17,7 +17,7 @@ export class SidebarMenu extends Component{
         let items=[
             {label:'Home',icon:'pi pi-fw pi-home',url:'./'},
             {label:'About',icon:'pi pi-fw pi-info',url:'./'},
-            {label:'Contact',icon:'pi pi-fw pi-user',url:'./'},
+            {label:'Contact',icon:'pi pi-fw pi-user',url:'./#/contact/'},
         ];
 
         if(this.props.loggedIn){
