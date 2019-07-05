@@ -22,13 +22,17 @@ class userClass extends database
     public function login($email,$password){
 
         $user_fields=$this->get_user($email);
+        if($user_fields==false){
+            return 'Not Registered';
+        }
+       // return $user_fields['password'];
         if($this->verify_password($password,$user_fields['password'])){
             $this->unid=$user_fields['unid'];
             $this->user_obj['first_name']=json_decode($user_fields['name'])->{'first'};
             $this->user_obj['last_name']=json_decode($user_fields['name'])->{'last'};
             $this->user_obj['email']=$user_fields['email'];
             $this->user_obj['phone']=$user_fields['phone'];
-            return $this;
+            return $this->user_obj;
         }
         else{
             return 'Invalid Login';
@@ -36,28 +40,36 @@ class userClass extends database
 
 
     }
-    public function get_user($email){
+    private function get_user($email){
         $user_fields=$this->get_list('user','email',$email)->fetch();
         if(isset($user_fields)){
             return $user_fields;
         }
         else{
-            return 'Invalid user';
+            return -1;
         }
 
 
     }
     public function create_user($email,$password,$name,$phone){
+        $user_fields=$this->get_user($email);
+        if($user_fields==false){
 
-        $password= $this->encrypt_password($password);
-        $data=[
-          'email'=>$email,
-          'password'=>$password,
-          'name'=>json_encode($name),
-          'phone'=>$phone
-        ];
-       // $this->activateTestOutput();
-        return $this->add_object('user',$data);
+            $password= $this->encrypt_password($password);
+            $data=[
+                'email'=>$email,
+                'password'=>$password,
+                'name'=>json_encode($name),
+                'phone'=>$phone
+            ];
+            //$this->activateTestOutput();
+             return $this->add_object('user',$data);
+
+           // return 'User does not exist';
+        }
+        return json_encode('User Exists');
+
+
 
 
     }

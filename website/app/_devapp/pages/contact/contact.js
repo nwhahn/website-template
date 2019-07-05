@@ -25,8 +25,29 @@ export class Contact extends Component{
     render(){
         return(
             <div className={'contact'}>
-                <div className="pageTitle">
-                    <h3>Contact</h3>
+                <div className="section">
+                    <div className="section-header">
+                        <h3 className="section-header-title">Location</h3>
+                        <div className="section-header-border">
+                            <div className="section-header-inner-border"/>
+                        </div>
+                    </div>
+                    <div className="section-content p-grid p-justify-center">
+                        <div className="CompanyAddress p-col-4">
+                            <span>511 Charles Ave</span>
+                            <div>Solvay, NY 13209</div>
+                        </div>
+                        <div className="CompanyAddress NewCompanyAddress p-col-4">
+                            <span>110 Luther Ave  </span>
+                            <div className={"burst-8"}/>
+                            <div>Liverpool, NY 13088</div>
+
+                        </div>
+                        <div className="CompanyAddress p-col-4">
+                            <span>New York City Location</span>
+                            <div>Somewhere in NYC</div>
+                        </div>
+                    </div>
                 </div>
                 <div className="section">
                     <div className="section-header">

@@ -21,6 +21,7 @@ import {HomeComponent} from './pages/home/HomeComponent'
 import {AccountSettings} from './pages/account/account_settings'
 import {Contact} from './pages/contact/contact'
 import {Store} from './pages/store/store'
+import {searchResults} from './pages/search/searchResults'
 //import { asyncComponent } from 'react-async-component';
 
 /** We are importing our index.php my app Vairaible */
@@ -50,6 +51,7 @@ class Myapp extends Component{
             loginScreen:false,
             loggedIn:true,
         }
+        document.addEventListener("mousedown", this.handleClick,false)
         this.onMenuButtonClick=this.onMenuButtonClick.bind(this);
         this.onMenuButtonKeyDown = this.onMenuButtonKeyDown.bind(this);
         this.onLoginButtonClick=this.onLoginButtonClick.bind(this);
@@ -149,12 +151,17 @@ class Myapp extends Component{
     }
     onSearchBtnClick(){
         if(this.searchBarDiv.classList.contains('active')){
-            console.log('search');
+            let location='./#/search/'+this.state.search.toString();
+           // console.log(location);
+            this.searchBarDiv.classList.remove('active');
+            window.location.href = location;
+
         }
         else{
             this.searchBarDiv.classList.add('active');
         }
     }
+
     getNavItems(){
         let nav_items=[];
         if(window.location.hash==='#/'){
@@ -169,6 +176,11 @@ class Myapp extends Component{
         }
 
         return nav_items;
+    }
+    handleClick=(e)=>{
+        if(this.searchBarDiv.classList.contains('active') && !this.searchBarDiv.contains(e.target)){
+            this.searchBarDiv.classList.remove('active');
+        }
     }
     render() {
         let loginPage=<Login visible={this.state.loginScreen} hide={this.hideLogin.bind(this)}/>;
@@ -212,9 +224,9 @@ class Myapp extends Component{
 
                     <ul className="header-menu p-unselectable-text">
                         <li ref={el => this.searchBarDiv = el} className={'search-bar'}>
-                            <div id={'search-field'}>
+                            <div className={'search-field'}>
 
-                                <InputText id={'search-input'} placeholder={'Search'}/>
+                                <InputText id={'search-input'} placeholder={'Search'}  value={this.state.search} onChange={(e) => this.setState({search:e.target.value})}/>
 
                             </div>
                         </li>
@@ -238,6 +250,7 @@ class Myapp extends Component{
                     <Route path="/account" component={AccountSettings} message={this.showMessage}/>
                     <Route path="/contact" component={Contact} message={this.showMessage}/>
                     <Route path="/store" component={Store}/>
+                    <Route path={"/search/:search"} component={searchResults}/>
                     {sidebarMenu}
                 </div>
                 {loginPage}

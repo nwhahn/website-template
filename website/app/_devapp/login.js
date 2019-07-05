@@ -52,6 +52,7 @@ export class Login extends Component{
     submitClick(){
         let request_type;
         let request;
+       // console.log(this.state.activePage);
         if(this.state.activePage===0){
             request_type='sign_in';
             request={request_type:request_type,email:this.state.email,password:this.state.password}
@@ -71,25 +72,46 @@ export class Login extends Component{
                     phone:this.state.phone
 
                 }
+
             }
+
             else{
-                console.log('passwords dont match');
+                this.messages.show({ severity: 'error', summary: 'Error', detail: 'passwords dont match'});
+
                 return;
             }
 
             //console.log('Register');
         }
+        let this_obj=this;
         $.ajax({
             url: './ajax_php/ajax_user.php',
             type: "POST",
             data:request,
-            success: function(data) {
-                console.log(data);
-            }.bind(this),
+            success : function(data)
+            {
+                if(data[0]==='{'){
+                    console.log(JSON.parse(data));
+                    //do stuff
+                    this_obj.messages.show({ severity: 'success', summary: 'Welcome '+JSON.parse(data).first_name})
+                }
+                else{
+                    while(data.includes('"')){
+                        data=data.replace("\"",'');
+                    }
+
+                    console.log(data);
+                    this_obj.setState({activePage:1});
+                    this_obj.messages.show({ severity: 'error', summary: 'Error', detail: data })
+                }
+
+            },
             error: function(xhr, status, err) {
-                console.log('error');
+                console.log('xhr:'+xhr+' status:'+status+' err:'+err);
             }.bind(this)
         });
+        //console.log(class_obj);
+
 
     }
     handleClick=(e)=>{
@@ -137,6 +159,9 @@ export class Login extends Component{
 
     render(){
         let shared=<div className='p-grid p-fluid'>
+
+            <Messages className={"p-col-12 p-md-12"} ref={(el) => this.messages = el} />
+
             <div ref={node=>this.EmailField=node} id='LoginEmail' className='LoginField p-col-12 p-offset-6'>
 
                                 <span className="p-float-label">
@@ -186,7 +211,9 @@ export class Login extends Component{
         return(
             <Dialog className='LoginForm' visible={this.props.visible} onHide={(e) => this.props.hide()} maximizable>
                 <div  className='p-grid p-fluid'>
-                    <Messages ref={(el) => this.messages = el} />
+
+
+
                     <div id='LoginHeader' className='LoginField p-col-12 p-md-6 p-offset-3'>
                         <img alt="logo" src="./app/assets/img/primereact-logo.png" />
                     </div>

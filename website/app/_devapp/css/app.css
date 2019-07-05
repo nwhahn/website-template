@@ -2,6 +2,10 @@ body {
   background-color: #141414;
 }
 
+.p-rating-icon {
+  color: #44ab10 !important;
+}
+
 .product-img-box img {
   width: 60%;
   height: auto;
@@ -65,6 +69,26 @@ body {
 }
 .section .section-content .product-options .product-option .option-header {
   color: #44ab10;
+}
+.section .section-content .resultNav {
+  padding: 15px;
+}
+.section .section-content .resultNav .p-highlight {
+  background-color: #44ab10 !important;
+}
+.section .section-content .resultNav .p-paginator, .section .section-content .resultNav .p-dropdown-panel, .section .section-content .resultNav .p-dropdown {
+  background-color: #545454;
+  border: none;
+}
+.section .section-content .resultNav .p-paginator .p-dropdown-item, .section .section-content .resultNav .p-paginator .p-paginator-page, .section .section-content .resultNav .p-dropdown-panel .p-dropdown-item, .section .section-content .resultNav .p-dropdown-panel .p-paginator-page, .section .section-content .resultNav .p-dropdown .p-dropdown-item, .section .section-content .resultNav .p-dropdown .p-paginator-page {
+  color: #7ade4b;
+}
+.section .section-content .resultNav .p-paginator .p-paginator-page :hover, .section .section-content .resultNav .p-dropdown-panel .p-paginator-page :hover, .section .section-content .resultNav .p-dropdown .p-paginator-page :hover {
+  color: #44ab10;
+}
+.section .section-content .resultNav .p-dropdown-trigger, .section .section-content .resultNav .p-dropdown-label {
+  background-color: #545454;
+  color: #7ade4b;
 }
 
 .layout-header {
@@ -159,13 +183,13 @@ body {
 .layout-header .header-menu .search-icon span :hover, .layout-header .header-menu .search-bar span :hover {
   color: #fff;
 }
-.layout-header .header-menu .search-icon #search-field, .layout-header .header-menu .search-bar #search-field {
+.layout-header .header-menu .search-icon .search-field, .layout-header .header-menu .search-bar .search-field {
   padding: 5px;
   height: inherit;
   margin: 5px auto;
   align-content: center;
 }
-.layout-header .header-menu .search-icon #search-field input, .layout-header .header-menu .search-bar #search-field input {
+.layout-header .header-menu .search-icon .search-field input, .layout-header .header-menu .search-bar .search-field input {
   width: 400px;
 }
 .layout-header .header-menu .search-bar {
@@ -197,6 +221,7 @@ body {
 }
 
 #layout-content {
+  margin-top: 60px;
   padding-top: 10px;
 }
 #layout-content .form-fieldset {
@@ -205,6 +230,63 @@ body {
 #layout-content .form-fieldset .AccountField {
   padding: 20px;
 }
+#layout-content .pictureCarousel {
+  padding: 10px;
+  width: 90%;
+  margin: 0 5%;
+  position: relative;
+}
+#layout-content .pictureCarousel img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  max-height: 400px;
+  height: auto;
+  border: 1px solid #7ade4b;
+  border-radius: 3px;
+}
+#layout-content .pictureCarousel .carouselNav {
+  right: 35%;
+  width: 50%;
+  margin-left: 25%;
+}
+#layout-content .pictureCarousel .carouselNav li {
+  list-style: none;
+  opacity: 0.5;
+  display: block;
+  width: 40px;
+}
+#layout-content .pictureCarousel .carouselNav li i {
+  font-size: 20px;
+  transform: scale(2, 1);
+}
+#layout-content .pictureCarousel .carouselNav li:hover {
+  opacity: 0.8;
+}
+#layout-content .pictureCarousel .traverseBtn {
+  color: #545454;
+  opacity: 0.5;
+}
+#layout-content .pictureCarousel .traverseBtn .active {
+  color: #7ade4b;
+  opacity: 1;
+}
+#layout-content .pictureCarousel .traverseBtn :hover {
+  color: #7ade4b;
+  opacity: 1;
+}
+#layout-content .pictureCarousel .TraverseRight {
+  position: absolute;
+  right: 16px;
+  top: 35%;
+}
+#layout-content .pictureCarousel .TraverseLeft {
+  position: absolute;
+  left: 16px;
+  top: 35%;
+}
+
 #nav-menu {
   width: 100% !important;
   border: none;
@@ -213,6 +295,14 @@ body {
   margin-top: 60px;
   margin-left: 0;
   margin-right: 0;
+}
+
+.searchResultsPage .search-field {
+  padding: 15px;
+  margin: auto 0;
+}
+.searchResultsPage .search-field .search-input {
+  width: 90%;
 }
 
 .hidden {
@@ -277,6 +367,17 @@ body {
 .contact .p-editor-container {
   height: 70%;
 }
+.contact .CompanyAddress {
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+}
+.contact .CompanyAddress span {
+  font-weight: bold;
+}
+.contact .NewCompanyAddress {
+  outline: 2px #44ab10 solid;
+}
 
 .save-page, .submitPage {
   bottom: 0;
@@ -340,6 +441,29 @@ body {
   .layout-header img {
     display: none;
   }
+}
+.burst-8 {
+  background: #44ab10;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  text-align: center;
+  transform: rotate(20deg);
+}
+
+.burst-8:before {
+  content: "NEW!";
+  font-weight: bold;
+  font-size: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 30px;
+  background: #44ab10;
+  transform: rotate(315deg);
+  z-index: 1;
 }
 
 /*# sourceMappingURL=app.css.map */

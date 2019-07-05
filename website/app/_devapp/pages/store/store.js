@@ -2,17 +2,57 @@ import React, { Component } from 'react';
 import {Route,Link,HashRouter} from 'react-router-dom';
 
 import {ProductPage} from './ProductPage';
+import {CustomerQuote} from './CustomerQuote';
+import {CustomerWishlist} from './CustomerWishlist';
 
 import {Card} from 'primereact/card';
 import {Accordion,AccordionTab} from 'primereact/accordion';
+
+import {TabMenu} from 'primereact/tabmenu';
+
 import {HomeComponent} from "../home/HomeComponent";
 import {AccountSettings} from "../account/account_settings";
+export class Item extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+            mfq:'Test MFQ',
+            name:this.props.unid,
+            desc:'Woowwwwwww',
+            img:'',
+            rating:'',
+            SKU:''
+        }
+    }
+    render(){
+        return(
+            <Card className={"storeItem"} title={this.state.name} subTitle={this.state.mfq}>
+                {this.state.desc}
+            </Card>
+        );
+
+
+    }
+
+}
 
 export class StoreHome extends Component{
     constructor(props) {
         super(props);
         this.state={
-            accordion:''
+            accordion:'',
+            tabs:[
+                {label: 'Featured', icon: 'pi pi-fw pi-home'},
+                {label: 'Switches'},
+                {label: 'Wire'},
+                {label: 'Conduit'},
+                {label: 'Other'},
+
+
+            ],
+            product_items:[1,2,3],
+            activeTab:0,
+            itemAlignment:'p-col-12 p-md-6 p-lg-3',
         }
         this.buildAccordion();
     }
@@ -156,50 +196,16 @@ export class StoreHome extends Component{
                     </div>
                 </div>
                 <div className="section-content">
-                    <Accordion multiple={"true"}>
-                        <AccordionTab header="Indoor Lights">
-                            <div className="p-grid p-fluid">
-                                <div className="p-col-12 p-md-6 p-lg-4">
-                                    <Card title="Type 1">
-                                        <ul>
-                                            <li>1</li>
-                                            <li>2</li>
-                                            <li>3</li>
-                                        </ul>
-                                    </Card>
-                                </div>
-                                <div className="p-col-12 p-md-6 p-lg-4">
-                                    <Card title="Type 2">
-                                        <ul>
-                                            <li>1</li>
-                                            <li>2</li>
-                                            <li>3</li>
-                                        </ul>
-                                    </Card>
-                                </div>
-                                <div className="p-col-12 p-md-6 p-lg-4">
-                                    <Card title="Type 3">
-                                        <ul>
-                                            <li>1</li>
-                                            <li>2</li>
-                                            <li>3</li>
-                                        </ul>
-                                    </Card>
-                                </div>
+                    <div className={"p-grid p-fluid"}>
+                        <TabMenu className="p-col-12" model={this.state.tabs} activeItem={this.state.activeTab} onTabChange={(e) => this.setState({activeTab: e.value})}/>
+                        {this.state.product_items.map((id)=>(
+                            <div className={"p-col-12 p-sm-6 p-lg-4"}>
+                                <Item unid={id}/>
                             </div>
-                        </AccordionTab>
-                        <AccordionTab header="Outdoor Lights">
-                            <div className="p-grid p-fluid">
-                                <div className="p-col-12 p-md-6 p-lg-4">
-                                    <Card title="Type 1">
-                                        <ul>
-                                            <li>1</li>
-                                            <li>2</li>
-                                            <li>3</li>
-                                        </ul>
-                                    </Card>
-                                </div>
-                                <div className="p-col-12 p-md-6 p-lg-4"><Card title="Type 2"><ul><li>1</li><li>2</li><li>3</li></ul></Card></div><div className="p-col-12 p-md-6 p-lg-4"><Card title="Type 3"><ul><li>1</li><li>2</li><li>3</li></ul></Card></div></div></AccordionTab><AccordionTab header="Conduit"><div className="p-grid p-fluid"><div className="p-col-12 p-md-6 p-lg-4"><Card title="Type 1"><ul><li>1</li><li>2</li><li>3</li></ul></Card></div><div className="p-col-12 p-md-6 p-lg-4"><Card title="Type 2"><ul><li>1</li><li>2</li><li>3</li></ul></Card></div><div className="p-col-12 p-md-6 p-lg-4"><Card title="Type 3"><ul><li>1</li><li>2</li><li>3</li></ul></Card></div></div></AccordionTab><AccordionTab header="Wire"><div className="p-grid p-fluid"><div className="p-col-12 p-md-6 p-lg-4"><Card title="Type 1"><ul><li>1</li><li>2</li><li>3</li></ul></Card></div><div className="p-col-12 p-md-6 p-lg-4"><Card title="Type 2"><ul><li>1</li><li>2</li><li>3</li></ul></Card></div><div className="p-col-12 p-md-6 p-lg-4"><Card title="Type 3"><ul><li>1</li><li>2</li><li>3</li></ul></Card></div></div></AccordionTab></Accordion>
+                        ))}
+
+                    </div>
+
                 </div>
 
             </div>
@@ -214,7 +220,9 @@ export class Store extends Component{
         return(
             <div id={'store'}>
                 <Route exact path="/store" component={StoreHome}/>
-                <Route exact path="/store/product/" component={ProductPage}/>
+                <Route exact path="/store/product/:id" component={ProductPage}/>
+                <Route exact path="/store/wishlists/" component={CustomerWishlist}/>
+                <Route exact path="/store/quotes/" component={CustomerQuote}/>
             </div>
 
         );
