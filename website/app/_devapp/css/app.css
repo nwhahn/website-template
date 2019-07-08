@@ -91,6 +91,19 @@ body {
   color: #7ade4b;
 }
 
+#store .storeItem {
+  margin: 30px 0;
+  outline: 2px solid #44ab10;
+  padding: 20px;
+  background-color: #545454;
+}
+#store .storeItem img {
+  box-shadow: 5px 5px #141414;
+}
+#store .storeItem:hover {
+  transform: scale(1.1);
+}
+
 .layout-header {
   background-color: #44ab10;
   display: block;
@@ -209,10 +222,11 @@ body {
   background-color: #378a0d;
 }
 .layout-header .header-menu .account-button {
-  float: left;
-  margin: 0;
-  padding: 0;
   height: 100%;
+}
+.layout-header .header-menu .account-button li {
+  float: left !important;
+  width: 100%;
 }
 .layout-header .header-menu .account-button .p-button {
   width: 60px;
@@ -434,6 +448,10 @@ body {
   }
 
   #nav-menu {
+    display: none;
+  }
+
+  .homeMenu {
     display: none;
   }
 }

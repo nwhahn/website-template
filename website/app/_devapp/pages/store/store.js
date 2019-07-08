@@ -9,6 +9,8 @@ import {Card} from 'primereact/card';
 import {Accordion,AccordionTab} from 'primereact/accordion';
 
 import {TabMenu} from 'primereact/tabmenu';
+import {Button} from 'primereact/button';
+import {Rating} from "primereact/rating";
 
 import {HomeComponent} from "../home/HomeComponent";
 import {AccountSettings} from "../account/account_settings";
@@ -16,19 +18,42 @@ export class Item extends Component{
     constructor(props){
         super(props);
         this.state={
-            mfq:'Test MFQ',
-            name:this.props.unid,
-            desc:'Woowwwwwww',
-            img:'',
-            rating:'',
-            SKU:''
+            id:this.props.unid,
+            mfq:'Manufacturer',
+            name:'This is where the Name Goes',
+            desc:'Insert Description HereInsert Description HereInsert Description HereInsert Description HereInsert Description HereInsert Description HereInsert Description Here',
+            img:'./app/assets/img/switch.jpg',
+            rating:3,
+            SKU:'',
+            new:false
         }
     }
     render(){
+
         return(
-            <Card className={"storeItem"} title={this.state.name} subTitle={this.state.mfq}>
-                {this.state.desc}
-            </Card>
+
+
+            <div className={"storeItem"}>
+                <div className="p-grid p-justify-center">
+                    <div className={"p-col-10"}>
+                        <img src={this.state.img}/>
+                    </div>
+                    <div className={"p-col-12"}>
+                        {this.state.mfq}
+                    </div>
+                    <div className={"p-col-12"}>
+                        {this.state.name}
+                    </div>
+                    <Rating value={this.state.rating} stars={5} readonly={true} cancel={false}/>
+                    <div className={"p-col-12"}>
+                        {this.state.desc}
+                    </div>
+                    <div className={"p-col-6"}>
+                        <Button label="Add to Cart" className="p-button-success" icon={"pi pi-shopping-cart"}/>
+                    </div>
+                </div>
+            </div>
+
         );
 
 
@@ -199,7 +224,7 @@ export class StoreHome extends Component{
                     <div className={"p-grid p-fluid"}>
                         <TabMenu className="p-col-12" model={this.state.tabs} activeItem={this.state.activeTab} onTabChange={(e) => this.setState({activeTab: e.value})}/>
                         {this.state.product_items.map((id)=>(
-                            <div className={"p-col-12 p-sm-6 p-lg-4"}>
+                            <div className={"p-col-12 p-sm-6 p-lg-4"} key={id}>
                                 <Item unid={id}/>
                             </div>
                         ))}

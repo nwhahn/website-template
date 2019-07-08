@@ -9,7 +9,7 @@ export class HomeComponent extends Component{
     constructor(props){
         super(props);
         this.header_carousel_items=[
-            'img/sample-header.jpg', 'img/pride-flag.jpg', 'img/moon.jpg', 'img/1331.png', 'img/sample-header.jpg'
+            'img/sample-header.jpg', 'img/primereact-logo.png', 'img/moon.jpg', 'img/geswideful-small-300x60.png', 'img/sample-header.jpg'
         ]
         this.homeMenu=[
             {
