@@ -16,7 +16,7 @@
     "react-transition-group": "^4.0.1",
     "classnames": "^2.2.6",
     "typescript": "^3.4.5",
-    "three": "^0.105.2"
+    "three": "^0.137.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
